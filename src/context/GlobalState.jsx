@@ -1,5 +1,4 @@
-import React, { useReducer } from 'react';
-import rootReducer from 'reducers/rootReducer';
+import React, { useState } from 'react';
 import { GlobalContext } from './global-context';
 
 export const defaultGames = {
@@ -41,9 +40,9 @@ const GlobalState = (props) => {
     return games;
   }
 
-  const [state, dispatch] = useReducer(rootReducer, defaultGames, init);
+  const [state, setState] = useState(init());
   return (
-    <GlobalContext.Provider value={{ state: state, dispatch: dispatch }}>
+    <GlobalContext.Provider value={{ state, setState }}>
       {props.children}
     </GlobalContext.Provider>
   );

@@ -2,7 +2,20 @@ import React, { useContext } from 'react';
 import './game-card.css';
 import classnames from 'classnames';
 import { GlobalContext } from 'context/global-context';
-import { SUCCESSFUL_SELECTION, FAILURE } from 'reducers/rootReducer';
+
+function getSelectedGames(games, id) {
+  const selectedGames = games.map((game) => {
+    if (game.id === id) {
+      game.selected = true;
+    }
+    return game;
+  });
+
+  return {
+    games: selectedGames,
+    err: '',
+  };
+}
 
 function GameCard(props) {
   const globalContext = useContext(GlobalContext);
@@ -10,10 +23,16 @@ function GameCard(props) {
 
   function handleClick(id) {
     gameCard.classList.add('game-card-click');
+
     try {
-      globalContext.dispatch({ type: SUCCESSFUL_SELECTION, payload: id });
+      const selectedGames = getSelectedGames(globalContext.state.games, id);
+      localStorage.setItem('gameNight', JSON.stringify(selectedGames));
+      globalContext.setState(selectedGames);
     } catch (err) {
-      globalContext.dispatch({ type: FAILURE, payload: err });
+      globalContext.setState({
+        ...globalContext.state,
+        error: `There was an error- ${err}`,
+      });
     }
   }
 

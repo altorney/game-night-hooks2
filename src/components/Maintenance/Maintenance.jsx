@@ -1,14 +1,31 @@
 import { GlobalContext } from 'context/global-context';
+import { defaultGames } from 'context/GlobalState';
 import React, { useContext } from 'react';
-import {
-  SUCCESSFUL_ADD,
-  SUCCESSFUL_DELETE,
-  FAILURE,
-  RESET_CARDS,
-  RESET_GAMES,
-} from 'reducers/rootReducer';
 
 import './maintenance.css';
+
+function getGamesAfterAdd(games, newGame) {
+  return {
+    games: [...games, ...newGame],
+    err: '',
+  };
+}
+
+function getGamesAfterDelete(games, id) {
+  const gamesAfterDelete = games.filter((game) => game.id !== id);
+  return {
+    games: gamesAfterDelete,
+    err: '',
+  };
+}
+
+function getResetGames(games) {
+  games.forEach((game) => (game.selected = false));
+  return {
+    games: games,
+    err: '',
+  };
+}
 
 function Maintenance() {
   const globalContext = useContext(GlobalContext);
@@ -16,38 +33,56 @@ function Maintenance() {
   function handleAddClick() {
     let newId = Math.random();
     try {
-      globalContext.dispatch({
-        type: SUCCESSFUL_ADD,
-        payload: [{ id: newId, title: newGame.value }],
-      });
+      const gamesAfterAdd = getGamesAfterAdd(globalContext.state.games, [
+        { id: newId, title: newGame.value },
+      ]);
+      storeGameChanges(gamesAfterAdd);
     } catch (err) {
-      globalContext.dispatch({ type: FAILURE, payload: err });
+      setError(err);
     }
+
     newGame.value = '';
   }
 
   function handleDeleteClick(id) {
     try {
-      globalContext.dispatch({ type: SUCCESSFUL_DELETE, payload: id });
+      const gamesAfterDelete = getGamesAfterDelete(
+        globalContext.state.games,
+        id
+      );
+      storeGameChanges(gamesAfterDelete);
     } catch (err) {
-      globalContext.dispatch({ type: FAILURE, payload: 'There was an error' });
+      setError(err);
     }
   }
 
   function handleResetClick() {
     try {
-      globalContext.dispatch({ type: RESET_CARDS });
+      const gamesAfterReset = getResetGames(globalContext.state.games);
+      storeGameChanges(gamesAfterReset);
     } catch (err) {
-      globalContext.dispatch({ type: FAILURE, payload: 'There was an error' });
+      setError(err);
     }
   }
 
   function handleResetGamesClick() {
     try {
-      globalContext.dispatch({ type: RESET_GAMES });
+      storeGameChanges(defaultGames);
     } catch (err) {
-      globalContext.dispatch({ type: FAILURE, payload: 'There was an error' });
+      setError(err);
     }
+  }
+
+  function setError(err) {
+    globalContext.setState({
+      ...globalContext.state,
+      error: `There was an error- ${err}`,
+    });
+  }
+
+  function storeGameChanges(games) {
+    localStorage.setItem('gameNight', JSON.stringify(games));
+    globalContext.setState(games);
   }
 
   let newGame = null;
