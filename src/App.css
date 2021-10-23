@@ -1,0 +1,10 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 400px;
+  margin: auto;
+  top: 10%;
+  left: calc(50% - 200px);
+  position: absolute;
+}

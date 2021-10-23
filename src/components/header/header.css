@@ -1,0 +1,30 @@
+.logo-wrapper {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+}
+.header {
+  display: flex;
+  margin-top: 40px;
+  vertical-align: middle;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 120px;
+}
+
+.link {
+  width: 50%;
+  text-align: center;
+  background-color: #f69220;
+  border-radius: 6px;
+  height: 40px;
+  padding-top: 12px;
+  color: #2323ee;
+  font-weight: 700;
+}
+
+.link:nth-child(odd) {
+  margin-right: 10px;
+}

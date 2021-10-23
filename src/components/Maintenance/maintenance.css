@@ -1,0 +1,74 @@
+.maintenance-games-wrapper {
+  font-size: x-large;
+  font-weight: 600;
+  color: #2323ee;
+}
+.maintenance-games-wrapper > div {
+  width: 100%;
+  font-size: x-large;
+  font-weight: 400;
+}
+
+.maintenance-add-wrapper {
+  font-size: x-large;
+  font-weight: 600;
+  padding-top: 30px;
+  color: #2323ee;
+}
+.maintenance-add-wrapper > div {
+  width: 100%;
+  font-size: x-large;
+  font-weight: 400;
+}
+
+.game-row {
+  display: flex;
+}
+
+.game-title {
+  width: 90%;
+}
+
+.add-game-row {
+  display: flex;
+  padding-top: 12px;
+}
+
+.add-input {
+  width: 90%;
+}
+
+.add-input > input {
+  width: 90%;
+  height: 30px;
+  font-size: x-large;
+  border-radius: 6px;
+  color: #2323ee;
+  border-color: #2323ee;
+}
+
+.delete {
+  background-image: url("../../assets/trash.png");
+  background-size: 30px;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+}
+
+.add {
+  background-image: url("../../assets/add.png");
+  background-size: 30px;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.reset {
+  height: 30px;
+  border-radius: 6px;
+  background-color: rgb(7, 177, 50);
+  color: #2323ee;
+}
